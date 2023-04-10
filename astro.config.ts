@@ -6,7 +6,5 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   base: "/",
   output: "server",
-  adapter: cloudflare({
-    mode: "directory",
-  }),
+  adapter: cloudflare(),
 });
