@@ -7,7 +7,9 @@ export const get: APIRoute = async ({ params, request, redirect }) => {
 
   const db = (getRuntime(request).env as { SHORTENER: KVNamespace }).SHORTENER;
 
+  console.log(params);
   const link = await getLink(db, params.code);
+  console.log(link);
   if (!link) return redirect("https://xhyrom.dev");
 
   // TODO: add tracking
