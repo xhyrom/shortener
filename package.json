@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "wrangler pages dev --local ./dist --kv=SHORTENER_LINKS --d1=SHORTENER_ACCOUNTS  --live-reload --port 3000",
+    "preview": "wrangler pages dev --local ./dist --kv=SHORTENER_LINKS --d1=SHORTENER_DATABASE  --live-reload --port 3000",
     "wrangler": "pnpm run build && pnpm run preview",
     "nodemon": "nodemon --watch 'src/**/*' --ext astro,tsx,ts --exec pnpm run build"
   },

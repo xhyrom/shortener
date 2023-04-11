@@ -1,4 +1,5 @@
 declare interface CloudflareEnv {
+  // consider using better names for these keys
   SHORTENER_LINKS: KVNamespace;
-  SHORTENER_ACCOUNTS: D1Database;
+  SHORTENER_DATABASE: D1Database;
 }

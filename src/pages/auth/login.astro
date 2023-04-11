@@ -1,0 +1,34 @@
+---
+import Layout from "~/layouts/Layout.astro";
+export const prerender = true;
+---
+
+<Layout>
+  <main class="flex flex-col text-center gap-y-6">
+    <input type="text" placeholder="name" id="name" />
+    <input type="password" placeholder="password" id="password" />
+    <button
+      class="w-48 broder-1 flex items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
+      >Login</button
+    >
+  </main>
+</Layout>
+
+<script>
+  const button = document.querySelector("button")!;
+  button.addEventListener("click", async () => {
+    const name = (document.querySelector("#name") as HTMLInputElement)?.value;
+    const password = (document.querySelector("#password") as HTMLInputElement)
+      ?.value;
+
+    await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, password }),
+    });
+
+    //window.location.href = "/dash";
+  });
+</script>
