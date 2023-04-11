@@ -6,7 +6,7 @@ import { getIp } from "../../lib/ip";
 export const get: APIRoute = async ({ params, request, redirect }) => {
   if (!params.code) return redirect("https://xhyrom.dev"); // unreachable
 
-  const db = (getRuntime(request).env as { SHORTENER: KVNamespace }).SHORTENER;
+  const db = (getRuntime(request).env as CloudflareEnv).SHORTENER_LINKS;
 
   const link = await getLink(db, params.code);
   if (!link) return redirect("https://xhyrom.dev");
