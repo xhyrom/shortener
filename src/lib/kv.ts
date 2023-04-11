@@ -10,7 +10,10 @@ interface Stats {
 
 type LinkWithStats = Link & Stats;
 
-export const getLink = async (db: KVNamespace, code: string): Promise<Link> => {
+export const getLink = async (
+  db: KVNamespace,
+  code: string
+): Promise<Link | null> => {
   return await db.get(`links/${code}`, {
     cacheTtl: 60,
     type: "json",
@@ -20,7 +23,7 @@ export const getLink = async (db: KVNamespace, code: string): Promise<Link> => {
 export const getLinkStats = async (
   db: KVNamespace,
   code: string
-): Promise<Stats> => {
+): Promise<Stats | null> => {
   return await db.get<Stats>(`stats/${code}`, {
     cacheTtl: 60,
     type: "json",
@@ -30,9 +33,9 @@ export const getLinkStats = async (
 export const getLinkWithStats = async (
   db: KVNamespace,
   code: string
-): Promise<LinkWithStats> => {
+): Promise<LinkWithStats | null> => {
   const data = await getLink(db, code);
-  if (!data) return;
+  if (!data) return null;
 
   const stats = await getLinkStats(db, code);
 
@@ -47,7 +50,9 @@ export const getLinks = async (db: KVNamespace) => {
   const result: Promise<LinkWithStats>[] = [];
 
   for (const link of links.keys)
-    result.push(getLinkWithStats(db, link.name.slice(6)));
+    result.push(
+      getLinkWithStats(db, link.name.slice(6)) as Promise<LinkWithStats>
+    );
 
   return (await Promise.all(result)).sort((a, b) => b.visits - a.visits);
 };
