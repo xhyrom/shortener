@@ -1,5 +1,6 @@
 ---
 import Layout from "~/layouts/Layout.astro";
+import { CONFIG } from "~/config";
 
 export const prerender = true;
 ---
@@ -7,7 +8,7 @@ export const prerender = true;
 <Layout>
   <div class="absolute top-0 w-screen h-4 bg-[#fbc11a]"></div>
   <main class="flex flex-col text-center gap-y-6">
-    <h1 class="text-white text-6xl font-extrabold">Lorem, ipsum.</h1>
+    <h1 class="text-white text-6xl font-extrabold">{CONFIG.name}</h1>
     <div class="flex gap-x-6 items-center justify-center">
       <a
         href=""
