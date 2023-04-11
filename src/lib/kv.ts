@@ -17,6 +17,16 @@ export const getLink = async (db: KVNamespace, code: string): Promise<Link> => {
   });
 };
 
+export const getLinkStats = async (
+  db: KVNamespace,
+  code: string
+): Promise<Stats> => {
+  return await db.get<Stats>(`stats/${code}`, {
+    cacheTtl: 60,
+    type: "json",
+  });
+};
+
 export const getLinkWithStats = async (
   db: KVNamespace,
   code: string
@@ -24,10 +34,7 @@ export const getLinkWithStats = async (
   const data = await getLink(db, code);
   if (!data) return;
 
-  const stats = await db.get<Stats>(`stats/${code}`, {
-    cacheTtl: 60,
-    type: "json",
-  });
+  const stats = await getLinkStats(db, code);
 
   return {
     ...data,
@@ -83,3 +90,22 @@ export const deleteLink = async (
 };
 
 // TODO: track visits
+export const recentlyVisited = async (
+  db: KVNamespace,
+  code: string,
+  ip: string
+) => {
+  return !!(await db.get(`stats/${code}/${ip}/tracked`));
+};
+
+export const track = async (db: KVNamespace, code: string, ip: string) => {
+  if (await recentlyVisited(db, code, ip)) return;
+
+  const stats = (await getLinkStats(db, code)) ?? { visits: 0 };
+  stats.visits++;
+
+  await Promise.all([
+    db.put(`stats/${code}/${ip}/tracked`, "true", { expirationTtl: 3600 }), // 1 hour
+    db.put(`stats/${code}`, JSON.stringify(stats)),
+  ]);
+};

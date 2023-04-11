@@ -1,6 +1,7 @@
 import { APIRoute } from "astro";
 import { getRuntime } from "@astrojs/cloudflare/runtime";
-import { getLink } from "../lib/kv";
+import { getLink, track } from "../lib/kv";
+import { getIp } from "../lib/ip";
 
 export const get: APIRoute = async ({ params, request, redirect }) => {
   if (!params.code) return redirect("https://xhyrom.dev"); // unreachable
@@ -10,6 +11,7 @@ export const get: APIRoute = async ({ params, request, redirect }) => {
   const link = await getLink(db, params.code);
   if (!link) return redirect("https://xhyrom.dev");
 
-  // TODO: add tracking
+  await track(db, params.code, getIp(request));
+
   return redirect(link.target);
 };
