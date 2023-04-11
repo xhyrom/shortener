@@ -6,8 +6,9 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "wrangler pages dev --local ./dist --kv=SHORTENER  --live-reload --port 3000",
+    "wrangler": "pnpm run build && pnpm run preview",
+    "nodemon": "nodemon --watch 'src/**/*' --ext astro,tsx,ts --exec pnpm run build"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^6.2.2",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230404.0",
+    "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
     "prettier-plugin-astro": "^0.8.0"
   }

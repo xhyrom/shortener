@@ -1,7 +1,7 @@
 import { APIRoute } from "astro";
 import { getRuntime } from "@astrojs/cloudflare/runtime";
-import { getLink, track } from "../lib/kv";
-import { getIp } from "../lib/ip";
+import { getLink, track } from "../../lib/kv";
+import { getIp } from "../../lib/ip";
 
 export const get: APIRoute = async ({ params, request, redirect }) => {
   if (!params.code) return redirect("https://xhyrom.dev"); // unreachable
