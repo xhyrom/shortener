@@ -2,7 +2,7 @@
 import { handleAuth } from "~/lib/utils";
 
 const account = await handleAuth(Astro);
-if (!account.success) return account;
+if (!account.success) return account.data;
 
 const { name, id, avatar_url } = account.data;
 ---

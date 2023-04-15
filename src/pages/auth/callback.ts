@@ -1,10 +1,16 @@
 import { getRuntime } from "@astrojs/cloudflare/runtime";
 import { APIRoute } from "astro";
 import { github } from "~/lib/workers-auth-provider";
-import { createAccount, getAccount, updateAccount } from "~/lib/d1";
+import {
+  createAccount,
+  deleteInvite,
+  getAccount,
+  getInvite,
+  updateAccount,
+} from "~/lib/d1";
 import { generateJwt } from "~/lib/jwt";
 
-export const get: APIRoute = async ({ request }) => {
+export const get: APIRoute = async ({ request, cookies }) => {
   const runtime = getRuntime(request).env as CloudflareEnv;
 
   try {
@@ -25,6 +31,14 @@ export const get: APIRoute = async ({ request }) => {
         user.avatar_url
       );
     } else {
+      const invite = await getInvite(
+        runtime.shortener_database,
+        cookies.get("__hyroshortener-invite-code").value || ""
+      );
+      if (!invite) return new Response("Invalid invite code", { status: 400 });
+
+      await deleteInvite(runtime.shortener_database, invite.code);
+
       await createAccount(
         runtime.shortener_database,
         user.name,
@@ -42,14 +56,11 @@ export const get: APIRoute = async ({ request }) => {
     return new Response(null, {
       status: 302,
       headers: {
-        location: "/dash",
+        location: "/dash/",
         "Set-Cookie": `__hyroshortener-auth=${jwt}; expires=${now.toUTCString()}; path=/;`,
       },
     });
   } catch (error) {
-    console.log("ASDASD");
-    console.log(error);
-
     return new Response(null, {
       status: 500,
     });

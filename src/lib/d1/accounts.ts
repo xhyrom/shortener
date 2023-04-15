@@ -41,10 +41,10 @@ export const updateAccount = async (
 export const getAccount = async (
   db: D1Database,
   id: number
-): Promise<Account | undefined> => {
+): Promise<Account | null> => {
   const result = await db
     .prepare("SELECT * FROM Accounts WHERE id = ?1")
     .bind(id)
     .first();
-  return result as Account | undefined;
+  return result as Account | null;
 };

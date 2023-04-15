@@ -9,16 +9,23 @@ export const prerender = true;
   <main class="flex flex-col text-center gap-y-6">
     <h1 class="text-white text-6xl font-extrabold">{CONFIG.name}</h1>
     <div class="flex gap-x-6 items-center justify-center">
-      <a
-        href="/auth/login"
-        class="w-48 broder-1 flex items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
-        >Login</a
-      >
-      <a
-        href="/register"
+      <input type="text" id="invite_code" placeholder="invite code" />
+      <button
         class="w-48 broder-1 flex items-center justify-center gap-x-3 rounded-lg border border-[#fbc11a] bg-[#735d1d]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#735d1d]"
-        >Sign Up</a
+        >Sign Up</button
       >
     </div>
   </main>
 </Layout>
+
+<script>
+  const button = document.querySelector("button")!;
+  const input = document.querySelector("#invite_code")! as HTMLInputElement;
+
+  button.addEventListener("click", () => {
+    const code = input.value;
+    if (code) {
+      window.location.href = `/auth/register?invite_code=${code}`;
+    }
+  });
+</script>
