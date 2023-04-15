@@ -1,0 +1,4 @@
+[[d1_databases]]
+binding = "shortener_database"
+database_name = "shortener_database"
+database_id = "77781be7-2e4d-4435-a48b-691fb3e6c375"

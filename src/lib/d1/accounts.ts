@@ -45,6 +45,6 @@ export const getAccount = async (
   const result = await db
     .prepare("SELECT * FROM Accounts WHERE id = ?1")
     .bind(id)
-    .run();
-  return result.results?.[0] as Account | undefined;
+    .first();
+  return result as Account | undefined;
 };
