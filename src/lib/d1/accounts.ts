@@ -40,11 +40,11 @@ export const updateAccount = async (
 
 export const getAccount = async (
   db: D1Database,
-  name: string
+  id: number
 ): Promise<Account | undefined> => {
   const result = await db
-    .prepare("SELECT * FROM Accounts WHERE name = ?1")
-    .bind(name)
+    .prepare("SELECT * FROM Accounts WHERE id = ?1")
+    .bind(id)
     .run();
   return result.results?.[0] as Account | undefined;
 };

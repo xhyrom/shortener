@@ -15,7 +15,7 @@ export const get: APIRoute = async ({ request }) => {
     request,
   });
 
-  const exist = await getAccount(runtime.shortener_database, user.name);
+  const exist = await getAccount(runtime.shortener_database, user.id);
   if (exist) {
     await updateAccount(
       runtime.shortener_database,
