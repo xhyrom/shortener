@@ -1,7 +1,7 @@
 import { getRuntime } from "@astrojs/cloudflare/runtime";
 import { APIRoute } from "astro";
 import { github } from "~/lib/workers-auth-provider";
-import { createAccount } from "~/lib/d1";
+import { createAccount, getAccount, updateAccount } from "~/lib/d1";
 import { generateJwt } from "~/lib/jwt";
 
 export const get: APIRoute = async ({ request }) => {
@@ -15,15 +15,24 @@ export const get: APIRoute = async ({ request }) => {
     request,
   });
 
-  console.log(user);
+  const exist = await getAccount(runtime.shortener_database, user.name);
+  if (exist) {
+    await updateAccount(
+      runtime.shortener_database,
+      user.name,
+      user.id,
+      user.avatar_url
+    );
+  } else {
+    await createAccount(
+      runtime.shortener_database,
+      user.name,
+      user.id,
+      user.avatar_url,
+      ""
+    );
+  }
 
-  await createAccount(
-    runtime.shortener_database,
-    user.name,
-    user.id,
-    user.avatar_url,
-    ""
-  );
   const jwt = await generateJwt(runtime.JWT_SECRET, user);
 
   const now = new Date();

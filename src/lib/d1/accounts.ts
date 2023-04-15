@@ -23,6 +23,21 @@ export const createAccount = async (
   return result.success;
 };
 
+export const updateAccount = async (
+  db: D1Database,
+  name: string,
+  id: number,
+  avatar_url: string
+): Promise<boolean> => {
+  const result = await db
+    .prepare(
+      "UPDATE Accounts SET name = ?1, id = ?2, avatar_url = ?3 WHERE name = ?1"
+    )
+    .bind(name, id, avatar_url)
+    .run();
+  return result.success;
+};
+
 export const getAccount = async (
   db: D1Database,
   name: string
