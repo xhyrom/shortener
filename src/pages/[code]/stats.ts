@@ -11,10 +11,9 @@ export const get: APIRoute = async ({ params, request }) => {
       }
     );
 
-  const db = (getRuntime(request).env as { SHORTENER: KVNamespace }).SHORTENER;
+  const db = (getRuntime(request).env as CloudflareEnv).SHORTENER_LINKS;
 
   const link = await getLinkStats(db, params.code);
-  console.log(link, await getLinks(db));
   if (!link)
     return new Response(
       JSON.stringify({ status: 404, error: "link_not_found" }),
