@@ -25,7 +25,7 @@ export const prerender = true;
   button.addEventListener("click", () => {
     const code = input.value;
     if (code) {
-      window.location.href = `/auth/register?invite_code=${code}`;
+      window.location.href = `/api/auth/register?invite_code=${code}`;
     }
   });
 </script>

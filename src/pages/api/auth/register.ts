@@ -1,6 +1,6 @@
 import { getRuntime } from "@astrojs/cloudflare/runtime";
 import { APIRoute } from "astro";
-import { deleteInvite, getInvite } from "~/lib/d1";
+import { getInvite } from "~/lib/d1";
 import { github } from "~/lib/workers-auth-provider";
 
 export const get: APIRoute = async ({ request }) => {

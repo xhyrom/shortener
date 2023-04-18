@@ -44,7 +44,13 @@ export const getInvite = async (
   return result as Invite | null;
 };
 
-export const getInvites = async (db: D1Database): Promise<Invite[] | null> => {
-  const result = await db.prepare("SELECT * FROM Invites").all();
+export const getInvites = async (
+  db: D1Database,
+  author_id: number
+): Promise<Invite[] | null> => {
+  const result = await db
+    .prepare("SELECT * FROM Invites WHERE author_id = ?1")
+    .bind(author_id)
+    .all();
   return result.results as Invite[] | null;
 };

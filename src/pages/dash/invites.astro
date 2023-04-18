@@ -1,0 +1,19 @@
+---
+import { getRuntime } from "@astrojs/cloudflare/runtime";
+import { getInvites } from "~/lib/d1";
+import { handleAuth } from "~/lib/utils";
+
+const { shortener_database } = getRuntime(Astro.request).env as CloudflareEnv;
+
+const account = await handleAuth(Astro);
+if (!account.success) return account.data;
+
+const { name, id, avatar_url } = account.data;
+
+const invites = await getInvites(shortener_database, id);
+---
+
+<h1>Invites</h1>
+<hr />
+
+{invites?.map((invite) => <h1>{invite.code}</h1>)}
