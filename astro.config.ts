@@ -17,7 +17,6 @@ export default defineConfig({
   }),
   site: CONFIG.origin,
   base: "/",
-  trailingSlash: "always",
   integrations: [
     //sitemap(),
     /*robotsTxt({
