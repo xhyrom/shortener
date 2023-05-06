@@ -5,7 +5,7 @@ import { handleAuth } from "~/lib/utils";
 
 const { shortener_database } = getRuntime(Astro.request).env as CloudflareEnv;
 
-const account = await handleAuth(Astro);
+const account = await handleAuth(Astro.request, Astro.cookies, Astro.redirect);
 if (!account.success) return account.data;
 
 const { name, id, avatar_url } = account.data;

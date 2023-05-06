@@ -1,7 +1,7 @@
 import { getRuntime } from "@astrojs/cloudflare/runtime";
 import { verifyJwt } from "./jwt";
 import { Account, getAccount } from "./d1";
-import type { AstroGlobal } from "astro";
+import type { AstroCookies, AstroGlobal } from "astro";
 
 export const getUserIdFromJwt = async (
   jwt: string,
@@ -15,7 +15,9 @@ export const getUserIdFromJwt = async (
 };
 
 export const handleAuth = async (
-  Astro: AstroGlobal
+  request: Request,
+  cookies: AstroCookies,
+  redirect: AstroGlobal["redirect"]
 ): Promise<
   | {
       success: false;
@@ -26,23 +28,23 @@ export const handleAuth = async (
       data: Account;
     }
 > => {
-  const runtime = getRuntime(Astro.request).env as CloudflareEnv;
+  const runtime = getRuntime(request).env as CloudflareEnv;
 
   const userId = await getUserIdFromJwt(
-    Astro.cookies.get("__hyroshortener-auth").value || "",
+    cookies.get("__hyroshortener-auth").value || "",
     runtime.JWT_SECRET
   );
   if (!userId)
     return {
       success: false,
-      data: Astro.redirect("/"),
+      data: redirect("/"),
     };
 
   const account = await getAccount(runtime.shortener_database, userId);
   if (!account)
     return {
       success: false,
-      data: Astro.redirect("/"),
+      data: redirect("/"),
     };
 
   return {
