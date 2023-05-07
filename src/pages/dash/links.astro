@@ -1,22 +1,22 @@
 ---
 import Layout from "~/layouts/Layout.astro";
 import { getRuntime } from "@astrojs/cloudflare/runtime";
-import { getInvites } from "~/lib/d1";
 import { handleAuth } from "~/lib/utils";
+import { getLinks } from "~/lib/kv";
 
-const { shortener_database } = getRuntime(Astro.request).env as CloudflareEnv;
+const { SHORTENER_LINKS } = getRuntime(Astro.request).env as CloudflareEnv;
 
 const account = await handleAuth(Astro.request, Astro.cookies, Astro.redirect);
 if (!account.success) return account.data;
 
 const { name, id, avatar_url } = account.data;
 
-const invites = await getInvites(shortener_database, id);
+const links = await getLinks(SHORTENER_LINKS);
 ---
 
 <Layout>
   <main class="flex flex-col gap-y-6 text-center">
-    <h1 class="text-6xl font-extrabold text-white">Invites</h1>
+    <h1 class="text-6xl font-extrabold text-white">Links</h1>
     <div class="flex flex-col items-center justify-center gap-6 md:flex-row">
       <table class="min-w-full text-sm text-gray-400">
         <thead class="bg-gray-800 text-xs font-medium uppercase">
@@ -25,21 +25,20 @@ const invites = await getInvites(shortener_database, id);
               Code</th
             >
             <th scope="col" class="px-6 py-3 text-left tracking-wider">
-              Author</th
+              Target</th
+            >
+            <th scope="col" class="px-6 py-3 text-left tracking-wider">
+              Visits</th
             >
           </tr>
         </thead>
         <tbody class="bg-gray-800">
           {
-            invites?.map((invite) => (
+            links?.map((link) => (
               <tr class="bg-black bg-opacity-20">
-                <td class="whitespace-nowrap px-6 py-4">{invite.code}</td>
-                <td class="flex whitespace-nowrap px-6 py-4">
-                  <img class="w-5" src={avatar_url} alt="" />
-                  <span class="ml-2 font-medium">
-                    {name} ({id})
-                  </span>
-                </td>
+                <td class="whitespace-nowrap px-6 py-4">{link.code}</td>
+                <td class="whitespace-nowrap px-6 py-4">{link.target}</td>
+                <td class="whitespace-nowrap px-6 py-4">{link.visits}</td>
               </tr>
             ))
           }

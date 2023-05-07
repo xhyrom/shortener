@@ -94,7 +94,6 @@ export const deleteLink = async (
   return true;
 };
 
-// TODO: track visits
 export const recentlyVisited = async (
   db: KVNamespace,
   code: string,
