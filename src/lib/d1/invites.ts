@@ -6,12 +6,12 @@ const nanoid = customAlphabet(
 
 export interface Invite {
   code: string;
-  author_id: string;
+  author_id: number;
 }
 
 export const createInvite = async (
   db: D1Database,
-  authorId: string
+  authorId: number
 ): Promise<boolean> => {
   const code = nanoid();
 

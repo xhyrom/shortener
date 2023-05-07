@@ -1,5 +1,3 @@
-import { getInvite } from "./invites";
-
 export interface Account {
   name: string;
   id: number;
@@ -10,12 +8,8 @@ export const createAccount = async (
   db: D1Database,
   name: string,
   id: number,
-  avatar_url: string,
-  invite: string
+  avatar_url: string
 ): Promise<boolean> => {
-  //const validInvite = (await getInvite(db, invite)) !== undefined;
-  //if (!validInvite) return false;
-
   const result = await db
     .prepare("INSERT INTO Accounts (name, id, avatar_url) VALUES (?1, ?2, ?3)")
     .bind(name, id, avatar_url)

@@ -43,8 +43,7 @@ export const get: APIRoute = async ({ request, cookies }) => {
         runtime.shortener_database,
         user.name,
         user.id,
-        user.avatar_url,
-        ""
+        user.avatar_url
       );
     }
 
