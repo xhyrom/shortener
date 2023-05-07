@@ -14,10 +14,17 @@ export const getLink = async (
   db: KVNamespace,
   code: string
 ): Promise<Link | null> => {
-  return await db.get(`links/${code}`, {
+  const data = (await db.get(`links/${code}`, {
     cacheTtl: 60,
     type: "json",
-  });
+  })) as Link | null;
+
+  return data
+    ? {
+        ...data,
+        code,
+      }
+    : null;
 };
 
 export const getLinkStats = async (
