@@ -1,4 +1,5 @@
 ---
+import Layout from "~/layouts/Layout.astro";
 import { handleAuth } from "~/lib/utils";
 
 const account = await handleAuth(Astro.request, Astro.cookies, Astro.redirect);
@@ -7,6 +8,27 @@ if (!account.success) return account.data;
 const { name, id, avatar_url } = account.data;
 ---
 
-<h1>Hello {name}!</h1>
-<p>Your id is {id}</p>
-<img src={avatar_url} />
+<Layout>
+  <main class="flex flex-col items-center justify-center gap-y-6 text-center">
+    <img
+      src={avatar_url}
+      width="200"
+      height="200"
+      sizes="(max-width: 200px) 100vw, 200px"
+      alt="descriptive text"
+      class={"h-[200px] w-[200px]"}
+    />
+    <section
+      class="flex flex-col items-center justify-center gap-y-6 text-center"
+    >
+      <h1 class="text-6xl font-extrabold text-white">{name} ({id})</h1>
+      <div class="flex flex-col items-center justify-center gap-6 md:flex-row">
+        <a
+          href="/dash/invites"
+          class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
+          >Invites</a
+        >
+      </div>
+    </section>
+  </main>
+</Layout>
