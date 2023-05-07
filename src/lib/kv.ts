@@ -15,7 +15,7 @@ export const getLink = async (
   code: string
 ): Promise<Link | null> => {
   const data = (await db.get(`links/${code}`, {
-    cacheTtl: 60,
+    cacheTtl: 300,
     type: "json",
   })) as Link | null;
 
@@ -32,7 +32,7 @@ export const getLinkStats = async (
   code: string
 ): Promise<Stats | null> => {
   return await db.get<Stats>(`stats/${code}`, {
-    cacheTtl: 60,
+    cacheTtl: 300,
     type: "json",
   });
 };
