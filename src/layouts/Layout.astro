@@ -37,6 +37,11 @@ import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
     />
   </head>
   <body class="bg-dark font-body">
-    <slot />
+    <div class="flex flex-col justify-between bg-dark xl:h-screen xl:w-screen">
+      <div>
+        <div class="h-[9px] cursor-pointer bg-yellow"></div>
+      </div>
+      <slot />
+    </div>
   </body>
 </html>

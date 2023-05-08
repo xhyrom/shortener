@@ -1,59 +1,29 @@
 ---
 import Layout from "~/layouts/Layout.astro";
 import { CONFIG } from "~/config";
-import Container from "~/components/atoms/Container.astro";
 
 export const prerender = true;
-
-/**
- * <Layout>
-  <div class="flex h-screen items-center justify-center">
-    <main class="flex flex-col gap-y-6 text-center">
-      <h1 class="text-6xl font-extrabold text-white">{CONFIG.name}</h1>
-      <div class="flex flex-col items-center justify-center gap-6 md:flex-row">
-        <a
-          href="/api/auth/login"
-          class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
-          >Login</a
-        >
-        <a
-          href="/register"
-          class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#fbc11a] bg-[#735d1d]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#735d1d]"
-          >Sign Up</a
-        >
-      </div>
-    </main>
-  </div>
-</Layout>
- */
 ---
 
 <Layout>
-  <main
-    class="container mx-auto mt-12 flex flex-col content-center items-center justify-center 2xl:h-screen"
-  >
-    <h1 class="mb-8 text-6xl font-extrabold text-white">{CONFIG.name}</h1>
-    <div
-      class="flex flex-col flex-wrap items-center justify-center gap-4 md:flex-row"
-    >
-      {
-        new Array(24).fill(0).map(() => (
-          <>
-            <a
-              href="/api/auth/login"
-              class="w-48 gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-center text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
-            >
-              Login
-            </a>
-            <a
-              href="/register"
-              class="w-48 gap-x-3 rounded-lg border border-[#fbc11a] bg-[#735d1d]/50 px-10 py-3 text-center text-lg font-semibold text-white transition-colors hover:bg-[#735d1d]"
-            >
-              Sign Up
-            </a>
-          </>
-        ))
-      }
-    </div>
-  </main>
+  <div class="mt-12 flex w-screen flex-col xl:h-screen xl:justify-between">
+    <main class="h-full overflow-hidden text-white">
+      <div class="flex h-full flex-col items-center justify-center gap-y-6">
+        <h1 class="text-6xl font-extrabold text-white">{CONFIG.name}</h1>
+
+        <div class="mt-2 flex flex-col gap-2 md:flex-row">
+          <a
+            href="/api/auth/login"
+            class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
+            >Login</a
+          >
+          <a
+            href="/register"
+            class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#fbc11a] bg-[#735d1d]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#735d1d]"
+            >Sign Up</a
+          >
+        </div>
+      </div>
+    </main>
+  </div>
 </Layout>
