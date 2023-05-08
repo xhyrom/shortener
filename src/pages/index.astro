@@ -1,11 +1,12 @@
 ---
 import Layout from "~/layouts/Layout.astro";
 import { CONFIG } from "~/config";
+import Container from "~/components/atoms/Container.astro";
 
 export const prerender = true;
----
 
-<Layout>
+/**
+ * <Layout>
   <div class="flex h-screen items-center justify-center">
     <main class="flex flex-col gap-y-6 text-center">
       <h1 class="text-6xl font-extrabold text-white">{CONFIG.name}</h1>
@@ -23,4 +24,32 @@ export const prerender = true;
       </div>
     </main>
   </div>
+</Layout>
+ */
+---
+
+<Layout>
+  <main
+    class="flex flex-col flex-wrap content-center items-center justify-center md:flex-row"
+  >
+    <h1 class="text-6xl font-extrabold text-white">{CONFIG.name}</h1>
+    {
+      new Array(8).fill(0).map(() => (
+        <>
+          <a
+            href="/api/auth/login"
+            class="flex gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
+          >
+            Login
+          </a>
+          <a
+            href="/register"
+            class="flex gap-x-3 rounded-lg border border-[#fbc11a] bg-[#735d1d]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#735d1d]"
+          >
+            Sign Up
+          </a>
+        </>
+      ))
+    }
+  </main>
 </Layout>
