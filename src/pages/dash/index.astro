@@ -10,33 +10,37 @@ const { name, id, avatar_url } = account.data;
 ---
 
 <Layout>
-  <main class="flex flex-col items-center justify-center gap-y-6 text-center">
-    <img
-      src={avatar_url}
-      width="200"
-      height="200"
-      sizes="(max-width: 200px) 100vw, 200px"
-      alt="descriptive text"
-      class={"h-[200px] w-[200px]"}
-    />
-    <section
-      class="flex flex-col items-center justify-center gap-y-6 text-center"
-    >
-      <h1 class="text-6xl font-extrabold text-white">{name} ({id})</h1>
-      <div class="flex flex-col items-center justify-center gap-6 md:flex-row">
-        <a
-          href="/dash/invites"
-          class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
-          >Invites</a
+  <div class="flex h-screen items-center justify-center">
+    <main class="flex flex-col items-center justify-center gap-y-6 text-center">
+      <img
+        src={avatar_url}
+        width="200"
+        height="200"
+        sizes="(max-width: 200px) 100vw, 200px"
+        alt="descriptive text"
+        class={"h-[200px] w-[200px]"}
+      />
+      <section
+        class="flex flex-col items-center justify-center gap-y-6 text-center"
+      >
+        <h1 class="text-6xl font-extrabold text-white">{name} ({id})</h1>
+        <div
+          class="flex flex-col items-center justify-center gap-6 md:flex-row"
         >
-        <a
-          href="/dash/links"
-          class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
-          >Links</a
-        >
-        <ModalButton name="Create Link" />
-        <ModalButton name="Create Inv" />
-      </div>
-    </section>
-  </main>
+          <a
+            href="/dash/invites"
+            class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
+            >Invites</a
+          >
+          <a
+            href="/dash/links"
+            class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
+            >Links</a
+          >
+          <ModalButton name="Create Link" />
+          <ModalButton name="Create Inv" />
+        </div>
+      </section>
+    </main>
+  </div>
 </Layout>
