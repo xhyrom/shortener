@@ -1,4 +1,4 @@
-interface Link {
+export interface Link {
   code: string;
   target: string;
   ttl?: number;

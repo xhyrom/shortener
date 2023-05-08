@@ -2,6 +2,7 @@ import { getRuntime } from "@astrojs/cloudflare/runtime";
 import { verifyJwt } from "./jwt";
 import { Account, getAccount } from "./d1";
 import type { AstroCookies, AstroGlobal } from "astro";
+import { customAlphabet } from "nanoid";
 
 export const getUserIdFromJwt = async (
   jwt: string,
@@ -52,3 +53,8 @@ export const handleAuth = async (
     data: account,
   };
 };
+
+export const nanoid = customAlphabet(
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  10
+);
