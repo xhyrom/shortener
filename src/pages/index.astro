@@ -6,12 +6,12 @@ export const prerender = true;
 ---
 
 <Layout>
-  <div class="mt-12 flex w-screen flex-col xl:h-screen xl:justify-between">
+  <div class="mt-12 flex w-screen flex-col md:h-screen md:justify-between">
     <main class="h-full overflow-hidden text-white">
       <div class="flex h-full flex-col items-center justify-center gap-y-6">
         <h1 class="text-6xl font-extrabold text-white">{CONFIG.name}</h1>
 
-        <div class="mt-2 flex flex-col gap-2 md:flex-row">
+        <div class="mt-2 flex flex-col gap-6 md:flex-row">
           <a
             href="/api/auth/login"
             class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
