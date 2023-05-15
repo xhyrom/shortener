@@ -5,30 +5,28 @@ export const prerender = true;
 ---
 
 <Layout>
-  <div class="mt-12 flex w-screen flex-col md:h-screen md:justify-between">
-    <main class="h-full overflow-hidden text-white">
-      <div class="flex h-full flex-col items-center justify-center gap-y-6">
-        <h1 class="text-6xl font-extrabold text-white">Register</h1>
+  <main class="h-full overflow-hidden pb-4 text-white">
+    <div class="flex h-full flex-col items-center justify-center gap-y-6">
+      <h1 class="text-6xl font-extrabold text-white">Register</h1>
 
-        <div class="rounded bg-dark-100">
-          <div class="h-[9px] rounded-t bg-yellow"></div>
+      <div class="rounded bg-dark-100">
+        <div class="h-[9px] rounded-t bg-yellow"></div>
 
-          <div class="flex flex-col gap-4 p-3">
-            <input
-              type="text"
-              id="invite_code"
-              placeholder="invite code"
-              class="h-13 w-full rounded-lg bg-dark-400 pl-2 text-2xl text-white placeholder-dark-50"
-            />
-            <button
-              class="flex w-full items-center justify-center rounded-lg border border-[#fbc11a] bg-[#735d1d]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#735d1d]"
-              >Sign Up</button
-            >
-          </div>
+        <div class="flex flex-col gap-4 p-3">
+          <input
+            type="text"
+            id="invite_code"
+            placeholder="invite code"
+            class="h-13 w-full rounded-lg bg-dark-400 pl-2 text-2xl text-white placeholder-dark-50"
+          />
+          <button
+            class="flex w-full items-center justify-center rounded-lg border border-[#fbc11a] bg-[#735d1d]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#735d1d]"
+            >Sign Up</button
+          >
         </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 </Layout>
 
 <script>

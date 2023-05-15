@@ -9,9 +9,9 @@ if (!account.success) return account.data;
 const { name, id, avatar_url } = account.data;
 ---
 
-<Layout>
-  <div class="flex h-screen items-center justify-center">
-    <main class="flex flex-col items-center justify-center gap-y-6 text-center">
+<Layout authenicatedUser={account.data}>
+  <main class="h-full overflow-hidden pb-4 text-white">
+    <div class="flex h-full flex-col items-center justify-center gap-y-6">
       <img
         src={avatar_url}
         width="200"
@@ -41,6 +41,6 @@ const { name, id, avatar_url } = account.data;
           <ModalButton name="Create Inv" />
         </div>
       </section>
-    </main>
-  </div>
+    </div>
+  </main>
 </Layout>

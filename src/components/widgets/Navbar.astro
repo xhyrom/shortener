@@ -1,0 +1,46 @@
+---
+import { Account } from "~/lib/d1";
+const items = [
+  {
+    name: "discord",
+    href: "https://s.xhyrom.dev/discord",
+  },
+  {
+    name: "github",
+    href: "https://github.com/xHyroM/website",
+  },
+];
+
+const { authenicatedUser } = Astro.props as {
+  authenicatedUser: Account;
+};
+---
+
+<nav
+  class="text-3vw md:text-4 sticky bottom-0 flex h-7 items-center justify-between bg-dark-300 px-2 will-change-transform"
+>
+  <div class="flex space-x-2 text-gray-300">
+    <a href="/" class="text-yellow">home</a>
+    {
+      authenicatedUser && (
+        <>
+          <span>•</span>
+          <a href="/" class="text-yellow">
+            {authenicatedUser.name}
+          </a>
+        </>
+      )
+    }
+  </div>
+
+  <div class="flex space-x-2 text-gray-300">
+    {
+      items.map((item, i) => (
+        <>
+          <a href={item.href}>{item.name}</a>
+          {i !== items.length - 1 && <span>•</span>}
+        </>
+      ))
+    }
+  </div>
+</nav>
