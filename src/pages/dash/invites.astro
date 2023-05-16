@@ -1,7 +1,7 @@
 ---
 import Layout from "~/layouts/Layout.astro";
 import { getRuntime } from "@astrojs/cloudflare/runtime";
-import { getInvites } from "~/lib/d1";
+import { getAccount, getInvites } from "~/lib/d1";
 import { handleAuth } from "~/lib/utils";
 
 const { shortener_database } = getRuntime(Astro.request).env as CloudflareEnv;
@@ -9,17 +9,28 @@ const { shortener_database } = getRuntime(Astro.request).env as CloudflareEnv;
 const account = await handleAuth(Astro.request, Astro.cookies, Astro.redirect);
 if (!account.success) return account.data;
 
-const { name, id, avatar_url } = account.data;
+const { id } = account.data;
 
-const invites = await getInvites(shortener_database, id);
+const invites = await Promise.all(
+  (
+    await getInvites(shortener_database, id)
+  )?.map(async (invite) => ({
+    ...invite,
+    author: (await getAccount(shortener_database, invite.author_id)) || {
+      name: "Unknown",
+      id: "Unknown",
+      avatar_url: "https://cdn.discordapp.com/embed/avatars/0.png",
+    },
+  })) || []
+);
 ---
 
 <Layout authenicatedUser={account.data}>
-  <main class="flex flex-col gap-y-6 text-center">
-    <h1 class="text-6xl font-extrabold text-white">Invites</h1>
-    <div class="flex flex-col items-center justify-center gap-6 md:flex-row">
-      <table class="min-w-full text-sm text-gray-400">
-        <thead class="bg-gray-800 text-xs font-medium uppercase">
+  <main class="h-full overflow-hidden pb-4 text-white">
+    <div class="flex h-full flex-col items-center justify-center gap-y-6">
+      <h1 class="text-6xl font-extrabold text-white">Invites</h1>
+      <table class="mx-auto text-sm text-gray-400">
+        <thead class="bg-dark-400 text-xs font-medium uppercase">
           <tr>
             <th scope="col" class="px-6 py-3 text-left tracking-wider">
               Code</th
@@ -29,15 +40,15 @@ const invites = await getInvites(shortener_database, id);
             >
           </tr>
         </thead>
-        <tbody class="bg-gray-800">
+        <tbody class="bg-dark-400">
           {
             invites?.map((invite) => (
               <tr class="bg-black bg-opacity-20">
                 <td class="whitespace-nowrap px-6 py-4">{invite.code}</td>
                 <td class="flex whitespace-nowrap px-6 py-4">
-                  <img class="w-5" src={avatar_url} alt="" />
+                  <img class="w-5" src={invite.author.avatar_url} alt="pfp" />
                   <span class="ml-2 font-medium">
-                    {name} ({id})
+                    {invite.author.name} ({invite.author.id})
                   </span>
                 </td>
               </tr>
