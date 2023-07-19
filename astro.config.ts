@@ -1,4 +1,4 @@
-import path from "path";
+import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
@@ -8,7 +8,7 @@ import compress from "astro-compress";
 import tailwind from "@astrojs/tailwind";
 import { CONFIG } from "./src/config";
 import svelte from "@astrojs/svelte";
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
 // https://astro.build/config
@@ -20,15 +20,15 @@ export default defineConfig({
   site: CONFIG.origin,
   base: "/",
   integrations: [
-  //sitemap(),
-  /*robotsTxt({
-  policy: [
-    {
-      userAgent: "*",
-    },
-  ],
-  sitemap: true,
-  }),*/
+  sitemap(),
+  robotsTxt({
+    policy: [
+      {
+        userAgent: "*",
+      },
+    ],
+    sitemap: true,
+  }),
   compress({
     css: true,
     html: true,
@@ -39,7 +39,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        "~": path.resolve(__dirname, "./src")
+        "~": resolve(__dirname, "./src")
       }
     }
   }

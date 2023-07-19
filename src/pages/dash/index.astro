@@ -1,5 +1,7 @@
 ---
-import ModalButton from "~/components/widgets/ModalButton.svelte";
+import CreateLink from "~/components/widgets/CreateLink.svelte";
+import CreateInvite from "~/components/widgets/CreateInvite.svelte";
+import Modals from "~/components/atoms/Modals.svelte";
 import Layout from "~/layouts/Layout.astro";
 import { handleAuth } from "~/lib/utils";
 
@@ -37,8 +39,10 @@ const { name, id, avatar_url } = account.data;
             class="broder-1 flex w-48 items-center justify-center gap-x-3 rounded-lg border border-[#4e59d6] bg-[#373a54]/50 px-10 py-3 text-lg font-semibold text-white transition-colors hover:bg-[#373a54]"
             >Links</a
           >
-          <ModalButton name="Create Link" />
-          <ModalButton name="Create Inv" />
+          <Modals client:only="svelte">
+            <CreateLink name="Create Link" client:only="svelte" />
+            <CreateInvite name="Create Inv" client:only="svelte" />
+          </Modals>
         </div>
       </section>
     </div>
