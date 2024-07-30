@@ -5,4 +5,4 @@ ssh = "git@github.com:xhyrom/shortener.git"
 ssh = "git@git.sr.ht:~hyro/shortener"
 primary = true
 [providers.codeberg]
-ssh = "git@codeberg.org:xHyroM/website.git"
+ssh = "git@codeberg.org:xhyrom/shortener.git"
