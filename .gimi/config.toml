@@ -1,0 +1,8 @@
+[providers]
+[providers.github]
+ssh = "git@github.com:xhyrom/shortener.git"
+[providers.sourcehut]
+ssh = "git@git.sr.ht:~hyro/shortener"
+primary = true
+[providers.codeberg]
+ssh = "git@codeberg.org:xHyroM/website.git"

@@ -12,6 +12,11 @@
     </a>
 </p>
 
+## Where to submit bugs & pull requests?
+
+issue tracker: [https://todo.sr.ht/~hyro/xhyrom.dev](https://todo.sr.ht/~hyro/xhyrom.dev)
+mailing list (PRs): [https://lists.sr.ht/~hyro/xhyrom.dev](https://lists.sr.ht/~hyro/xhyrom.dev)
+
 ## Setup
 
 1. Clone this repository: `git clone https://github.com/xHyroM/shortener.git`
