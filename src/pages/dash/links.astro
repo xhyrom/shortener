@@ -1,10 +1,9 @@
 ---
 import Layout from "~/layouts/Layout.astro";
-import { getRuntime } from "@astrojs/cloudflare/runtime";
 import { handleAuth } from "~/lib/utils";
 import { getLinks } from "~/lib/kv";
 
-const { SHORTENER_LINKS } = getRuntime(Astro.request).env as CloudflareEnv;
+const { SHORTENER_LINKS } = Astro.locals.runtime.env;
 
 const account = await handleAuth(Astro.request, Astro.cookies, Astro.redirect);
 if (!account.success) return account.data;

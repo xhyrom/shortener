@@ -1,10 +1,10 @@
 <script>
-  import { openModal } from 'svelte-modals'
-  import Modal from './Modal.svelte'
+  import { openModal } from "svelte-modals";
+  import Modal from "./Modal.svelte";
   export let name;
 
   function handleClick() {
-    openModal(Modal, { title: 'Alert', message: 'create invite' })
+    openModal(Modal, { title: "Alert", message: "create invite" });
   }
 </script>
 

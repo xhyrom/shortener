@@ -1,10 +1,9 @@
 ---
 import Layout from "~/layouts/Layout.astro";
-import { getRuntime } from "@astrojs/cloudflare/runtime";
 import { getAccount, getInvites } from "~/lib/d1";
 import { handleAuth } from "~/lib/utils";
 
-const { shortener_database } = getRuntime(Astro.request).env as CloudflareEnv;
+const { shortener_database } = Astro.locals.runtime.env;
 
 const account = await handleAuth(Astro.request, Astro.cookies, Astro.redirect);
 if (!account.success) return account.data;
@@ -12,16 +11,14 @@ if (!account.success) return account.data;
 const { id } = account.data;
 
 const invites = await Promise.all(
-  (
-    await getInvites(shortener_database, id)
-  )?.map(async (invite) => ({
+  (await getInvites(shortener_database, id))?.map(async (invite) => ({
     ...invite,
     author: (await getAccount(shortener_database, invite.author_id)) || {
       name: "Unknown",
       id: "Unknown",
       avatar_url: "https://cdn.discordapp.com/embed/avatars/0.png",
     },
-  })) || []
+  })) || [],
 );
 ---
 

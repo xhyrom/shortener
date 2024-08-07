@@ -13,9 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // https://astro.build/config
 export default defineConfig({
   output: "server",
-  adapter: cloudflare({
-    mode: "directory",
-  }),
+  adapter: cloudflare(),
   site: CONFIG.origin,
   base: "/",
   integrations: [

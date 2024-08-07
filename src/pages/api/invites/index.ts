@@ -1,12 +1,11 @@
-import { getRuntime } from "@astrojs/cloudflare/runtime";
-import { APIRoute } from "astro";
+import type { APIRoute } from "astro";
 import { createInvite, getInvites } from "~/lib/d1";
 import { handleAuth } from "~/lib/utils";
 
-export const get: APIRoute = async ({ request, cookies, redirect }) => {
-  const db = (getRuntime(request).env as CloudflareEnv).shortener_database;
+export const get: APIRoute = async ({ cookies, redirect, locals }) => {
+  const db = locals.runtime.env.shortener_database;
 
-  const authorized = await handleAuth(request, cookies, redirect);
+  const authorized = await handleAuth(locals, cookies, redirect);
   if (!authorized.success) return authorized.data;
 
   const invites = await getInvites(db, authorized.data.id);
@@ -16,10 +15,10 @@ export const get: APIRoute = async ({ request, cookies, redirect }) => {
   });
 };
 
-export const post: APIRoute = async ({ request, cookies, redirect }) => {
-  const db = (getRuntime(request).env as CloudflareEnv).shortener_database;
+export const post: APIRoute = async ({ cookies, redirect, locals }) => {
+  const db = locals.runtime.env.shortener_database;
 
-  const authorized = await handleAuth(request, cookies, redirect);
+  const authorized = await handleAuth(locals, cookies, redirect);
   if (!authorized.success) return authorized.data;
 
   const result = await createInvite(db, authorized.data.id);
@@ -31,6 +30,6 @@ export const post: APIRoute = async ({ request, cookies, redirect }) => {
     }),
     {
       status: 200,
-    }
+    },
   );
 };
