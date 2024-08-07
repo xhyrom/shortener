@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { createInvite, getInvites } from "~/lib/d1";
 import { handleAuth } from "~/lib/utils";
 
-export const get: APIRoute = async ({ cookies, redirect, locals }) => {
+export const GET: APIRoute = async ({ cookies, redirect, locals }) => {
   const db = locals.runtime.env.shortener_database;
 
   const authorized = await handleAuth(locals, cookies, redirect);
@@ -15,7 +15,7 @@ export const get: APIRoute = async ({ cookies, redirect, locals }) => {
   });
 };
 
-export const post: APIRoute = async ({ cookies, redirect, locals }) => {
+export const POST: APIRoute = async ({ cookies, redirect, locals }) => {
   const db = locals.runtime.env.shortener_database;
 
   const authorized = await handleAuth(locals, cookies, redirect);

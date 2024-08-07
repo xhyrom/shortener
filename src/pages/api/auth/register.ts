@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { getInvite } from "~/lib/d1";
 import { github } from "~/lib/workers-auth-provider";
 
-export const get: APIRoute = async ({ request, locals }) => {
+export const GET: APIRoute = async ({ request, locals }) => {
   const env = locals.runtime.env;
 
   const inviteParam = new URL(request.url).searchParams.get("invite_code");
@@ -11,9 +11,8 @@ export const get: APIRoute = async ({ request, locals }) => {
     : null;
   if (!invite) return new Response("Invalid invite code", { status: 400 });
 
-  const cookie = `__hyroshortener-invite-code=${inviteParam}; Path=/; Max-Age=${
-    60 * 60 * 24
-  }`;
+  const cookie = `__hyroshortener-invite-code=${inviteParam}; Path=/; Max-Age=${60 * 60 * 24
+    }`;
 
   const location = await github.redirect({
     options: {

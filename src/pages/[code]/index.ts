@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { getLink, track } from "../../lib/kv";
 import { getIp } from "../../lib/ip";
 
-export const get: APIRoute = async ({ params, request, redirect, locals }) => {
+export const GET: APIRoute = async ({ params, request, redirect, locals }) => {
   if (!params.code) return redirect("https://xhyrom.dev"); // unreachable
 
   const db = locals.runtime.env.SHORTENER_LINKS;

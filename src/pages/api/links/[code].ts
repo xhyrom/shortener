@@ -2,11 +2,11 @@ import type { APIRoute } from "astro";
 import { deleteLink, getLink } from "~/lib/kv";
 import { handleAuth } from "~/lib/utils";
 
-export const get: APIRoute = ({ redirect, params }) => {
+export const GET: APIRoute = ({ redirect, params }) => {
   return redirect(`/${params.code}`);
 };
 
-export const del: APIRoute = async ({ cookies, redirect, params, locals }) => {
+export const DELETE: APIRoute = async ({ cookies, redirect, params, locals }) => {
   if (!params.code)
     return new Response(
       JSON.stringify({

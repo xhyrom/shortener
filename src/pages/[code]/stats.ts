@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { getLinkStats } from "../../lib/kv";
 import { handleAuth } from "~/lib/utils";
 
-export const get: APIRoute = async ({ params, cookies, redirect, locals }) => {
+export const GET: APIRoute = async ({ params, cookies, redirect, locals }) => {
   if (!params.code)
     return new Response(
       JSON.stringify({ status: 400, error: "missing_link" }),

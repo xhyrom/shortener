@@ -9,7 +9,7 @@ import {
 } from "~/lib/d1";
 import { generateJwt } from "~/lib/jwt";
 
-export const get: APIRoute = async ({ request, cookies, locals }) => {
+export const GET: APIRoute = async ({ request, cookies, locals }) => {
   const env = locals.runtime.env;
 
   try {

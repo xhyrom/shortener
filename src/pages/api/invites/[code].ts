@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { deleteInvite, getInvite } from "~/lib/d1";
 import { handleAuth } from "~/lib/utils";
 
-export const get: APIRoute = async ({ params, locals }) => {
+export const GET: APIRoute = async ({ params, locals }) => {
   if (!params.code)
     return new Response(
       JSON.stringify({
@@ -29,7 +29,7 @@ export const get: APIRoute = async ({ params, locals }) => {
   });
 };
 
-export const del: APIRoute = async ({ cookies, redirect, params, locals }) => {
+export const DELETE: APIRoute = async ({ cookies, redirect, params, locals }) => {
   if (!params.code)
     return new Response(
       JSON.stringify({

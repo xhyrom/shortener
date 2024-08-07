@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { github } from "~/lib/workers-auth-provider";
 
-export const get: APIRoute = async ({ locals }) => {
+export const GET: APIRoute = async ({ locals }) => {
   const clientId = locals.runtime.env.GITHUB_CLIENT_ID;
   const location = await github.redirect({
     options: {

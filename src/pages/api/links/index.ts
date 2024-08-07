@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { type Link, createLink, getLinks } from "~/lib/kv";
 import { handleAuth, nanoid } from "~/lib/utils";
 
-export const get: APIRoute = async ({ cookies, redirect, locals }) => {
+export const GET: APIRoute = async ({ cookies, redirect, locals }) => {
   const db = locals.runtime.env.SHORTENER_LINKS;
 
   const authorized = await handleAuth(locals, cookies, redirect);
