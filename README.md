@@ -21,13 +21,13 @@ mailing list (PRs): [https://lists.sr.ht/~hyro/xhyrom.dev](https://lists.sr.ht/~
 
 1. Clone this repository: `git clone https://github.com/xHyroM/shortener.git`
 2. Navigate to the project directory: `cd shortener`
-3. Install the dependencies: `pnpm install`
+3. Install the dependencies: `bun install`
 
 ## Usage
 
-- To run the development server: `pnpm run dev`
-- To build the project for production: `pnpm run build`
-- To preview the production build: `pnpm run preview`
+- To run the development server: `bun run dev`
+- To build the project for production: `bun run build`
+- To preview the production build: `bun run preview`
 
 ## Contributing
 

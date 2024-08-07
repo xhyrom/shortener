@@ -7,7 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "wrangler pages dev ./dist --kv=SHORTENER_LINKS --d1=shortener_database --live-reload --port 3000",
-    "wrangler": "pnpm run build && pnpm run preview",
+    "wrangler": "bun run build && bun run preview",
     "nodemon": "nodemon --watch 'src/**/*' --ext astro,tsx,ts,svelte --exec pnpm run build"
   },
   "dependencies": {
