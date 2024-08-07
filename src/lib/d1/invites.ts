@@ -7,7 +7,7 @@ export interface Invite {
 
 export const createInvite = async (
   db: D1Database,
-  authorId: number
+  authorId: number,
 ): Promise<boolean> => {
   const code = nanoid();
 
@@ -20,7 +20,7 @@ export const createInvite = async (
 
 export const deleteInvite = async (
   db: D1Database,
-  code: string
+  code: string,
 ): Promise<boolean> => {
   const result = await db
     .prepare("DELETE FROM Invites WHERE code = ?1")
@@ -31,7 +31,7 @@ export const deleteInvite = async (
 
 export const getInvite = async (
   db: D1Database,
-  code: string
+  code: string,
 ): Promise<Invite | null> => {
   const result = await db
     .prepare("SELECT * FROM Invites WHERE code = ?1")
@@ -42,7 +42,7 @@ export const getInvite = async (
 
 export const getInvites = async (
   db: D1Database,
-  author_id: number
+  author_id: number,
 ): Promise<Invite[] | null> => {
   const result = await db
     .prepare("SELECT * FROM Invites WHERE author_id = ?1")

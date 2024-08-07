@@ -1,19 +1,18 @@
-import { getRuntime } from "@astrojs/cloudflare/runtime";
-import { APIRoute } from "astro";
+import type { APIRoute } from "astro";
 import { deleteInvite, getInvite } from "~/lib/d1";
 import { handleAuth } from "~/lib/utils";
 
-export const get: APIRoute = async ({ request, params }) => {
+export const get: APIRoute = async ({ params, locals }) => {
   if (!params.code)
     return new Response(
       JSON.stringify({
         status: 400,
         error: "missing_code",
       }),
-      { status: 400 }
+      { status: 400 },
     );
 
-  const db = (getRuntime(request).env as CloudflareEnv).shortener_database;
+  const db = locals.runtime.env.shortener_database;
 
   const invite = await getInvite(db, params.code);
   if (!invite)
@@ -22,7 +21,7 @@ export const get: APIRoute = async ({ request, params }) => {
         status: 404,
         error: "invite_not_found",
       }),
-      { status: 404 }
+      { status: 404 },
     );
 
   return new Response(JSON.stringify(invite), {
@@ -30,19 +29,19 @@ export const get: APIRoute = async ({ request, params }) => {
   });
 };
 
-export const del: APIRoute = async ({ request, cookies, redirect, params }) => {
+export const del: APIRoute = async ({ cookies, redirect, params, locals }) => {
   if (!params.code)
     return new Response(
       JSON.stringify({
         status: 400,
         error: "missing_code",
       }),
-      { status: 400 }
+      { status: 400 },
     );
 
-  const db = (getRuntime(request).env as CloudflareEnv).shortener_database;
+  const db = locals.runtime.env.shortener_database;
 
-  const authorized = await handleAuth(request, cookies, redirect);
+  const authorized = await handleAuth(locals, cookies, redirect);
   if (!authorized.success) return authorized.data;
 
   const invite = await getInvite(db, params.code);
@@ -52,7 +51,7 @@ export const del: APIRoute = async ({ request, cookies, redirect, params }) => {
         status: 404,
         error: "invite_not_found",
       }),
-      { status: 404 }
+      { status: 404 },
     );
 
   const result = await deleteInvite(db, params.code);
@@ -64,6 +63,6 @@ export const del: APIRoute = async ({ request, cookies, redirect, params }) => {
     }),
     {
       status: 200,
-    }
+    },
   );
 };

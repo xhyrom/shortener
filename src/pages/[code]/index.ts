@@ -1,12 +1,11 @@
-import { APIRoute } from "astro";
-import { getRuntime } from "@astrojs/cloudflare/runtime";
+import type { APIRoute } from "astro";
 import { getLink, track } from "../../lib/kv";
 import { getIp } from "../../lib/ip";
 
-export const get: APIRoute = async ({ params, request, redirect }) => {
+export const get: APIRoute = async ({ params, request, redirect, locals }) => {
   if (!params.code) return redirect("https://xhyrom.dev"); // unreachable
 
-  const db = (getRuntime(request).env as CloudflareEnv).SHORTENER_LINKS;
+  const db = locals.runtime.env.SHORTENER_LINKS;
 
   const link = await getLink(db, params.code);
   if (!link) return redirect("https://xhyrom.dev");

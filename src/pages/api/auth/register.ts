@@ -1,14 +1,13 @@
-import { getRuntime } from "@astrojs/cloudflare/runtime";
-import { APIRoute } from "astro";
+import type { APIRoute } from "astro";
 import { getInvite } from "~/lib/d1";
 import { github } from "~/lib/workers-auth-provider";
 
-export const get: APIRoute = async ({ request }) => {
-  const runtime = getRuntime(request).env as CloudflareEnv;
+export const get: APIRoute = async ({ request, locals }) => {
+  const env = locals.runtime.env;
 
   const inviteParam = new URL(request.url).searchParams.get("invite_code");
   const invite = inviteParam
-    ? await getInvite(runtime.shortener_database, inviteParam)
+    ? await getInvite(env.shortener_database, inviteParam)
     : null;
   if (!invite) return new Response("Invalid invite code", { status: 400 });
 
@@ -18,7 +17,7 @@ export const get: APIRoute = async ({ request }) => {
 
   const location = await github.redirect({
     options: {
-      clientId: runtime.GITHUB_CLIENT_ID,
+      clientId: env.GITHUB_CLIENT_ID,
     },
   });
 

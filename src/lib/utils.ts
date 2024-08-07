@@ -1,12 +1,11 @@
-import { getRuntime } from "@astrojs/cloudflare/runtime";
 import { verifyJwt } from "./jwt";
-import { Account, getAccount } from "./d1";
+import { type Account, getAccount } from "./d1";
 import type { AstroCookies, AstroGlobal } from "astro";
 import { customAlphabet } from "nanoid";
 
 export const getUserIdFromJwt = async (
   jwt: string,
-  secret: string
+  secret: string,
 ): Promise<number | null> => {
   const result = await verifyJwt(jwt, secret);
 
@@ -16,9 +15,9 @@ export const getUserIdFromJwt = async (
 };
 
 export const handleAuth = async (
-  request: Request,
+  locals: App.Locals,
   cookies: AstroCookies,
-  redirect: AstroGlobal["redirect"]
+  redirect: AstroGlobal["redirect"],
 ): Promise<
   | {
       success: false;
@@ -29,11 +28,11 @@ export const handleAuth = async (
       data: Account;
     }
 > => {
-  const runtime = getRuntime(request).env as CloudflareEnv;
+  const env = locals.runtime.env;
 
   const userId = await getUserIdFromJwt(
-    cookies.get("__hyroshortener-auth").value || "",
-    runtime.JWT_SECRET
+    cookies.get("__hyroshortener-auth")?.value || "",
+    env.JWT_SECRET,
   );
   if (!userId)
     return {
@@ -41,7 +40,7 @@ export const handleAuth = async (
       data: redirect("/"),
     };
 
-  const account = await getAccount(runtime.shortener_database, userId);
+  const account = await getAccount(env.shortener_database, userId);
   if (!account)
     return {
       success: false,
@@ -56,5 +55,5 @@ export const handleAuth = async (
 
 export const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-  10
+  10,
 );

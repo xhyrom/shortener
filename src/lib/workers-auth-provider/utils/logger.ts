@@ -7,7 +7,6 @@ const logLevels: { [level in LogLevel]: (message: string) => void } = {
   error: console.error,
 };
 
-
 function logWithLevel(level: LogLevel): (message: string) => void {
   return (message: string) => {
     const logger = logLevels[level];
@@ -27,13 +26,11 @@ class Logger {
       return;
     }
     logWithLevel(level)(message);
-  };
+  }
 
   setEnabled(value: boolean) {
     this.enabled = value;
   }
 }
 
-
 export const logger = new Logger(false);
-

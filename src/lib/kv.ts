@@ -12,7 +12,7 @@ type LinkWithStats = Link & Stats;
 
 export const getLink = async (
   db: KVNamespace,
-  code: string
+  code: string,
 ): Promise<Link | null> => {
   const data = (await db.get(`links/${code}`, {
     cacheTtl: 300,
@@ -29,7 +29,7 @@ export const getLink = async (
 
 export const getLinkStats = async (
   db: KVNamespace,
-  code: string
+  code: string,
 ): Promise<Stats | null> => {
   return await db.get<Stats>(`stats/${code}`, {
     cacheTtl: 300,
@@ -39,7 +39,7 @@ export const getLinkStats = async (
 
 export const getLinkWithStats = async (
   db: KVNamespace,
-  code: string
+  code: string,
 ): Promise<LinkWithStats | null> => {
   const data = await getLink(db, code);
   if (!data) return null;
@@ -58,7 +58,7 @@ export const getLinks = async (db: KVNamespace) => {
 
   for (const link of links.keys)
     result.push(
-      getLinkWithStats(db, link.name.slice(6)) as Promise<LinkWithStats>
+      getLinkWithStats(db, link.name.slice(6)) as Promise<LinkWithStats>,
     );
 
   return (await Promise.all(result)).sort((a, b) => b.visits - a.visits);
@@ -68,7 +68,7 @@ export const createLink = async (
   db: KVNamespace,
   code: string,
   target: string,
-  ttl?: number
+  ttl?: number,
 ): Promise<Link> => {
   if (ttl && ttl < 60) ttl = 60; // minimum 60 seconds
 
@@ -80,7 +80,7 @@ export const createLink = async (
       target,
       created: new Date().toISOString(),
     }),
-    options
+    options,
   );
 
   return {
@@ -92,7 +92,7 @@ export const createLink = async (
 
 export const deleteLink = async (
   db: KVNamespace,
-  code: string
+  code: string,
 ): Promise<boolean> => {
   const link = await getLink(db, code);
   if (!link) return false;
@@ -104,7 +104,7 @@ export const deleteLink = async (
 export const recentlyVisited = async (
   db: KVNamespace,
   code: string,
-  ip: string
+  ip: string,
 ) => {
   return !!(await db.get(`stats/${code}/${ip}/tracked`));
 };

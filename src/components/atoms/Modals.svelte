@@ -1,13 +1,9 @@
 <script>
-  import { Modals, closeModal } from 'svelte-modals'
+  import { Modals, closeModal } from "svelte-modals";
 </script>
 
 <Modals>
-  <div
-    slot="backdrop"
-    class="backdrop"
-    on:click={closeModal}
-  />
+  <div slot="backdrop" class="backdrop" on:click={closeModal} />
 </Modals>
 
 <slot />
@@ -19,6 +15,6 @@
     bottom: 0;
     right: 0;
     left: 0;
-    background: rgba(0,0,0,0.50)
+    background: rgba(0, 0, 0, 0.5);
   }
 </style>
